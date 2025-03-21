@@ -46,11 +46,11 @@ class Application(tk.Frame):
         self.input_age.pack()
         self.input_age.bind("<Return>", lambda e: self.save_user())
 
-        # Botón de Registrar
+        # BotÃ³n de Registrar
         self.button_register = tk.Button(self, text="Registrar", command=self.save_user)
         self.button_register.pack(pady=10)
 
-        # Botón para Mostrar Usuarios
+        # BotÃ³n para Mostrar Usuarios
         self.button_show_users = tk.Button(
             self, text="Mostrar Usuarios", command=self.table_users
         )
@@ -64,7 +64,7 @@ class Application(tk.Frame):
 
             if not name or not age.isdigit():
                 tk_utils.show_error(
-                    "Error", "Debe ingresar un nombre y una edad válida"
+                    "Error", "Debe ingresar un nombre y una edad vÃ¡lida"
                 )
                 return
 
@@ -81,7 +81,7 @@ class Application(tk.Frame):
         except FileNotFoundError:
             tk_utils.show_error("Error", "No se pudo abrir el archivo de usuarios")
         except Exception as e:
-            tk_utils.show_error("Error", f"Ocurrió un error: {e}")
+            tk_utils.show_error("Error", f"OcurriÃ³ un error: {e}")
 
     def table_users(self):
         """Muestra la lista de usuarios registrados en una nueva ventana."""
@@ -107,11 +107,11 @@ class Application(tk.Frame):
                 for usuario in usuarios:
                     if usuario:
                         name, age = usuario.split(",")
-                        list_users.insert(tk.END, f"{name} - {age} años")
+                        list_users.insert(tk.END, f"{name} - {age} aÃ±os")
         except FileNotFoundError:
             list_users.insert(tk.END, "No hay usuarios registrados")
 
-        # Botón para volver a la ventana principal
+        # BotÃ³n para volver a la ventana principal
         button_close = tk.Button(
             self.table, text="Volver", command=self.close_table_users
         )
@@ -124,14 +124,12 @@ class Application(tk.Frame):
 
 
 class User:
-    """Clase para representar un usuario."""
-
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
     def __str__(self):
-        return f"{self.name}, {self.age} años"
+        return f"{self.name}, {self.age} aÃ±os"
 
 
 if __name__ == "__main__":
