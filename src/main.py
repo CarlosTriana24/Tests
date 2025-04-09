@@ -1,8 +1,8 @@
 import tkinter as tk
-from tkinter import messagebox
-from utilities import tkinter_utilities as tk_utils
+from utilities import tkinter_utilities as tk_utils, database as db
+from datetime import datetime
 
-
+instance_bd = db.DataBase("users.db")
 class Application(tk.Frame):
     def __init__(self, master=None, width=500, height=400):
         super().__init__(master)
@@ -70,9 +70,8 @@ class Application(tk.Frame):
 
             with open("usuarios.txt", "a", encoding="utf-8") as f:
                 f.write(f"{name},{age};")
-
+            instance_bd.insert_user(name, name + "@example.com", "123456", datetime.now(), datetime.now(), True, False)
             tk_utils.show_message("Registro", "Usuario registrado correctamente")
-
             # Limpiar campos
             self.input_name.delete(0, tk.END)
             self.input_age.delete(0, tk.END)
@@ -101,14 +100,17 @@ class Application(tk.Frame):
 
         # Leer usuarios desde el archivo
         try:
-            with open("usuarios.txt", "r", encoding="utf-8") as f:
-                contenido = f.read()
-                usuarios = contenido.split(";")
-                for usuario in usuarios:
-                    if usuario:
-                        name, age = usuario.split(",")
-                        list_users.insert(tk.END, f"{name} - {age} aÃ±os")
-        except FileNotFoundError:
+            # with open("usuarios.txt", "r", encoding="utf-8") as f:
+            #     contenido = f.read()
+            #     usuarios = contenido.split(";")
+            #     for usuario in usuarios:
+            #         if usuario:
+            #             name, age = usuario.split(",")
+            #             list_users.insert(tk.END, f"{name} - {age} aÃ±os")
+            users =  instance_bd.get_all_users()
+            for user in users:
+                list_users.insert(tk.END, f"{user.name} - {user.email}")
+        except BaseException:
             list_users.insert(tk.END, "No hay usuarios registrados")
 
         # BotÃ³n para volver a la ventana principal
